@@ -1,10 +1,11 @@
 import React from 'react';
 import { ImageBackground, StyleSheet, Text, View , Image ,Button, ActivityIndicator ,TouchableOpacity} from "react-native";
 
+
 function firstScreen({navigation}){
-    setTimeout(() => {
+      setTimeout(() => {
       navigation.navigate('Home')
-    }, 3000);
+    }, 2000);
     return(
     <View style= {styles.container}>
      <ImageBackground source = {require('./assests/bg.jpg')} style={styles.logo}>

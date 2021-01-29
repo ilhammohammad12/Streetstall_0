@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {View, Text, StyleSheet , Image,TouchableOpacity,Button, TextInput, Alert} from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import Auth0 from 'react-native-auth0';
-
+import AsyncStorage from "@react-native-community/async-storage";
 const auth0 = new Auth0({
   domain: 'dev-mliibbd9.us.auth0.com',
   clientId: 'yNyRd8aI7anSe1FESAnexZKm79QYi1tE',
@@ -17,21 +17,36 @@ export default class SignIn extends Component{
     this.state={
       accessToken:null,
     }
-  } 
-  onLogin = (navigate) =>{
-  auth0.webAuth
+  }
+   onLogin = (navigate) => {
+    auth0.webAuth
   .authorize({scope: 'openid email profile'})
-  .then(credentials => {
+  .then( credentials = async() => {
     Alert.alert("Notice", "Login Successfull")
-    this.setState({accessToken:credentials.accessToken});
-    navigate('Map');
-  })
-  .catch(error => console.log(error));
+      this.setState({accessToken:credentials.accessToken});
+    // this.storedata = async() => {
+      try{
+      await AsyncStorage.setItem('token','UUID123')
+    } catch(e){
+      console.log(e);
   }
-  onLogOut =() => {
-    auth0.webAuth.clearSession().catch(error => console.log(error));
+},)
+    navigate('Map'); 
   }
+  onLogOut =async() => {
+  //   try{
+  //     await AsyncStorage.setItem('accessToken',credentials)
+  //   } catch(e){
+  //     console.log(e);
+  //   }
+  // }
+      this.storedata
+  //   const final = this.state.accessToken;
+ auth0.webAuth.clearSession().catch(error => console.log(error)); 
+  // return final;
+}
   render() {
+    
     const { navigate } = this.props.navigation;
     let loggedIn = this.state.accessToken === null?false:true;
     return(

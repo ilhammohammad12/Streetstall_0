@@ -17,7 +17,7 @@ function HomeScreen({navigation}){
        </View>
        <View style= {styles.buttonStyles2} >
        <TouchableOpacity  style={styles.next} 
-       onPress={()=> navigation.navigate('Login')}>
+       onPress={()=> navigation.navigate('SplashScreen2')}>
          <Image source ={require('./assests/skip.png')} style={{width:35,height:35,top:5}} />
          <Text style={{top:7, fontSize:20 ,fontWeight: "bold" }}> Skip</Text>
         </TouchableOpacity>
