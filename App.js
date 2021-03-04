@@ -18,26 +18,7 @@ const Stack = createStackNavigator();
 
 function App({}){
   const [state,setState]= useState('null')
-  // const value
-  //    useEffect( async() => {
-  //       try {
-  //         value  = await AsyncStorage.getItem('token');
-  //        console.log (usetoken)
-  //    }
-  //    catch(e){
-  //       console.log(e);
-  //  } 
-  // });
-  // let retrieveData = async () => {
-  //   try {
-  //    let value = await AsyncStorage.getItem('token');
-  //    if (value !== null ){
-  //      <Login/>
-  //    }
-  //   } catch (error) {
-  //     // Error retrieving data
-  //   }
-  // };
+ 
   useEffect(()=>{
     setTimeout(async()=>{
        try {

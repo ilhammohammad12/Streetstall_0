@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { StyleSheet, View, Text, } from 'react-native';
 import GeoLocation from '@react-native-community/geolocation';
 import { Component, useEffect } from 'react/cjs/react.development';
-navigator.geolocation = require('@react-native-community/geolocation');
+// navigator.geolocation = require('@react-native-community/geolocation');
 import Geolocation from '@react-native-community/geolocation';
 
 export default function weat ({navigation}){
@@ -12,11 +12,16 @@ export default function weat ({navigation}){
   const [longitude,setlongitude] = React.useState(null)
   const [langitude,setlangitude] = React.useState(null)
   useEffect(()=>{
+    try{
       Geolocation.getCurrentPosition(position => {
         setlangitude(position.coords.latitude)
         setlongitude(position.coords.longitude)
         // console.log(langitude,longitude)
-    });
+      });
+    }
+      catch(e){
+        console.log(e);
+     }
     fetch(
       `http://api.openweathermap.org/data/2.5/weather?lat=${langitude}&lon=${longitude}&APPID=4bb5704bdc62eae8f11ee8a50bf1407d&units=metric`
     ).then(resp => resp.json())
@@ -27,19 +32,23 @@ export default function weat ({navigation}){
         setisLoading(false)
         // console.log(weatherCondition)
         // console.log(temperature)
-      });
+      }).catch((error)=>{
+        console.log('error');
+      })
+      
     });
     setTimeout(() => {
       navigation.navigate('Map')
     }, 2000);
     return (
       <View style={styles.container}>
-        {isLoading ? <Text>Getting Weather Data</Text> :
+        {isLoading ? <Text></Text> :
           <View style={[styles.weatherContainer, { backgroundColor: weatherConditions[weatherCondition].color }]}>
           <View style={styles.headerContainer}>
-              <Text style={styles.tempText}>{temperature}°</Text>
+              <Text style={styles.tempText}>RainCheck -  {temperature}°</Text>
           </View>
           <View style={styles.bodyContainer}>
+            <Text style={{alignItems:'center', bottom:150 , color: '#fff' ,fontSize:38}}>STREET                       STALL</Text>
               <Text style={styles.title}>{weatherConditions[weatherCondition].title}</Text>
               <Text style={styles.subtitle}>{weatherConditions[weatherCondition].subtitle}</Text>
           </View>
@@ -71,7 +80,7 @@ export default function weat ({navigation}){
     Clouds: {
       color: '#1F1C2C',
       title: 'Clouds',
-      subtitle: 'Everywhere',
+      subtitle: 'Might need a rain coat',
       icon: 'weather-cloudy'
     },
   
@@ -116,7 +125,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around'
     },
     tempText: {
-        fontSize: 72,
+        fontSize: 23,
         color: '#fff'
     },
     bodyContainer: {
